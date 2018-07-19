@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Configuration</title>
+    <style  type="text/css"><!-- .normal { background-color: #ffffff; } .highlight { background-color: #8f0000;  } --></style>
+    <script src="../scripts/general_ajax_script.js" type="text/javascript" ></script>
+    <script type="text/javascript">
+      /* <![CDATA[ */
+      function s2w_config()
+      {
+		var select = document.getElementById("sel_protocol");
+		var Remote_IP = document.getElementById("Remote_IP").value;
+		var Remote_Port = document.getElementById("Remote_Port").value;
+		var Local_Port = document.getElementById("Local_Port").value;
+		var option_value = select.options[select.selectedIndex].value;
+		
+		var temp = location.href.split("#");
+		var conf_method = temp[1];
+		
+		var mode_opt_value = "STATION"
+				 
+		var s = "PT:"+encodeURIComponent(option_value)+"/DI:"+encodeURIComponent(Remote_IP)+"/DP:"+encodeURIComponent(Remote_Port)+"/SP:"+encodeURIComponent(Local_Port)+"/CM:"+encodeURIComponent(conf_method)+
+		        "/MD:"+encodeURIComponent(mode_opt_value)+"^";
+		do_ajax( '/s2wconfig?'+s, 'setting_response_wps', null, 0, null, null, 'Failed', null);
+
+      }
+
+      function selectEvent(selectObj)
+      {
+    	  if(selectObj.value == "TSN" || selectObj.value == "USN")
+    	  {
+    		  document.getElementById('input_remote_ip').innerHTML="<td style=width:20px\">Remote IP</td>      <td><input type=\"text\" name=\"Remote_IP\" id=\"Remote_IP\" value=\"192.168.12.101\" disabled></input></td>"
+       		  document.getElementById('input_remote_port').innerHTML="<td style=width:20px\">Remote Port</td>  <td><input type=\"text\" name=\"Remote_Port\" id=\"Remote_Port\" value=\"5000\" disabled></input></td>"
+       		  document.getElementById('input_local_port').innerHTML="<td style=width:20px\">Local Port</td>    <td><input type=\"text\" name=\"Local_Port\" id=\"Local_Port\" value=\"5000\"></input></td>"
+       		  document.getElementById('setting_btn').disabled = false;
+    	  }
+    	  else if(selectObj.value == "TCN" || selectObj.value == "UCN")
+    	  {
+    		  document.getElementById('input_remote_ip').innerHTML="<td style=width:20px\">Remote IP</td>      <td><input type=\"text\" name=\"Remote_IP\" id=\"Remote_IP\" value=\"192.168.12.101\"></input></td>"
+    		  document.getElementById('input_remote_port').innerHTML="<td style=width:20px\">Remote Port</td>  <td><input type=\"text\" name=\"Remote_Port\" id=\"Remote_Port\" value=\"5000\"></input></td>"
+    		  document.getElementById('input_local_port').innerHTML="<td style=width:20px\">Local Port</td>    <td><input type=\"text\" name=\"Local_Port\" id=\"Local_Port\" value=\"5000\"></input></td>"
+    		  document.getElementById('setting_btn').disabled = false;
+    	  }
+    	  else
+    	  {
+    		  document.getElementById('input_remote_ip').innerHTML=""
+       		  document.getElementById('input_remote_port').innerHTML=""
+       		  document.getElementById('input_local_port').innerHTML=""
+       		  document.getElementById('setting_btn').disabled = true;
+    	  }
+      }
+    </script>
+  </head>
+  <body style="font-family:verdana;" >
+     <table border='0' cellpadding='0' cellspacing='0' width="98%">
+      <tr style="height:20px"><td>&nbsp;</td></tr>
+      <tr style="border-collapse: collapse; padding: 0;">
+        <td style="width:20px"></td>
+        <td id="logo_path" style="width:117px"></td>
+        <td style="width:20px;"></td>
+        <td id="title" style="vertical-align:middle; text-align:center; font: bold 25px/100% Verdana, Arial, Helvetica, sans-serif;">
+        Serial to Wi-Fi Setting
+        </td>
+        <td style="width:137px;"></td>
+      </tr>
+      <tr><td>&nbsp;</td></tr>
+    </table>
+    <noscript><h2>Javascript is required for this page to work correctly.</h2></noscript>
+    
+    <script src="../scripts/general_ajax_script.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	CheckLogined();
+    	SetCustomLogoTitle("Serial to Wi-Fi Setting");
+    </script>
+    
+    <table style="margin-left:auto;margin-right:auto;" >
+	    <tr>
+	    	<td style="vertical-align:middle; text-align:left; font: bold 15px/100% Verdana, Arial, Helvetica, sans-serif;">
+	    	Step 1 : Select Serial to Wi-Fi Configuration Value
+	    	</td>
+	    </tr>
+	</table>
+	<form name="s2w_conf_form" action="">
+	<table style="margin-left:auto;margin-right:auto;" >
+	    <tr><td style=width:20px">Protocol(TCP/UDP)</td>
+	    	<td>
+	  		    <select name = select_protocol class='sel_protocol' id='sel_protocol' onChange="javascript:selectEvent(this)">
+			    	<option value=""> Protocol </option>
+			    	<option value="TSN"> TCP Server </option>
+			    	<option value="TCN"> TCP Client </option>
+			    	<option value="USN"> UDP Server </option>
+			    	<option value="UCN"> UDP Client </option>
+		    	</select>
+	  		</td>
+	    </tr>
+	    <tr id="input_remote_ip"></tr>
+	    <tr id="input_remote_port"></tr>
+	    <tr id="input_local_port"></tr>
+    </table>
+	<div style="margin-left:auto;margin-right:auto;" id ="setting_response_wps">
+    <table style="margin-left:auto;margin-right:auto;"> 
+  	    <tr>
+  	    	<td><input type="button" id=setting_btn value="Setting" class="s2w_config_btn" onclick="s2w_config();" disabled/></td>
+		</tr>
+    </table>
+	</div>
+	<p><input style="vertical-align:bottom;float:left;margin-left:50px" type="button" value="< Main Page" onclick="document.location.href='../s2web/s2w_main.html'" /></p>
+    </form>
+  </body>
+</html>

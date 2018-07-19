@@ -1,0 +1,14 @@
+#ifndef WX_COMMANDS_MQTT_H
+#define WX_COMMANDS_MQTT_H
+
+
+UINT8 WXCmd_MQTTSET(UINT8 *ptr);
+UINT8 WXCmd_MQTTCON(UINT8 *ptr);
+UINT8 WXCmd_MQTTSUB(UINT8 *ptr);
+UINT8 WXCmd_MQTTPUB(UINT8 *ptr);
+//daniel 160301 gpio control
+UINT8 WXCmd_MQTTGPIO(UINT8 *ptr);
+UINT8 WXCmd_MQTTADC(UINT8 *ptr);
+
+
+#endif

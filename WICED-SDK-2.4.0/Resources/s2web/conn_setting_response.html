@@ -1,0 +1,167 @@
+<WICED:section suffix="_success_response"/>
+<table style="margin-left:auto;margin-right:auto;"> 
+	<tr>
+		<td><input type="button" id=setting_btn value="Setting" class="s2w_config_btn" onclick="s2w_config();"></td>
+		<td><input type="button", id=next_btn value="Next_Step" class="next_btn" onclick="document.location.href='../s2web/conn_setting_station.html'"/></td>
+	</tr>
+	<tr>		
+		<td style=width:20px">Setting Result</td>
+		<td><input type="text" name = result id=resp_result value ="Success"></td>
+	</tr>
+</table>
+<WICED:section suffix="_fail_response"/>
+<table style="margin-left:auto;margin-right:auto;"> 
+	<tr>
+		<td><input type="button" id=setting_btn value="Setting" class="s2w_config_btn" onclick="s2w_config();"></td>
+	</tr>
+	<tr>
+		<td style=width:20px">Result</td>
+		<td><input type="text" name = result id=resp_result value ="Fail:Setting value is wrong"></td>
+	</tr>
+</table>
+
+
+<WICED:section suffix="_success_station_respose"/>
+<table style="margin-left:auto;margin-right:auto;"> 
+	<tr>
+		<td><input type="button" id=station_set_btn value="Setting" class="station_set_btn" onclick="s2w_config_station();"></td>
+		<td><input type="button", id=next_btn value="Next_Step" class="next_btn" onclick="document.location.href='../config/scan_page_outer.html'"/></td>
+	</tr>
+	<tr>		
+		<td style=width:20px">Setting Result</td>
+		<td><input type="text" name = result id=resp_result value ="Success"></td>
+	</tr>
+</table>
+<WICED:section suffix="_fail_station_respose"/>
+<table style="margin-left:auto;margin-right:auto;"> 
+	<tr>
+		<td><input type="button" id=station_set_btn value="Setting" class="station_set_btn" onclick="s2w_config_station();"></td>
+	</tr>
+	<tr>
+		<td style=width:20px">Result</td>
+		<td><input type="text" name = result id=resp_result value ="Fail:Setting value is wrong"></td>
+	</tr>
+</table>
+
+
+<WICED:section suffix="_success_AP_mode_response"/>
+<table style="margin-left:auto;margin-right:auto;"> 
+	<tr>
+		<td><input type="button" id=setting_btn value="Setting" class="s2w_config_btn" onclick="s2w_config();"></td>
+		<td><input type="button", id=next_btn value="Next_Step" class="next_btn" onclick="document.location.href='../s2web/conn_setting_apmode.html'"/></td>
+	</tr>
+	<tr>		
+		<td style=width:20px">Setting Result</td>
+		<td><input type="text" name = result id=resp_result value ="Success"></td>
+	</tr>
+</table>
+<WICED:section suffix="_success_wps_pbc_respose"/>
+<table style="margin-left:auto;margin-right:auto;"> 
+	<tr>
+		<td><input type="button" id=setting_btn value="Setting" class="s2w_config_btn" onclick="s2w_config();"></td>
+		<td><input type="button", id=next_btn value="Next_Step" class="next_btn" onclick="document.location.href='../s2web/wps_pbc.html'"/></td>
+	</tr>
+	<tr>		
+		<td style=width:20px">Setting Result</td>
+		<td><input type="text" name = result id=resp_result value ="Success"></td>
+	</tr>
+</table>
+
+
+<WICED:section suffix="_success_wps_pin_respose"/>
+<table style="margin-left:auto;margin-right:auto;"> 
+	<tr>
+		<td><input type="button" id=setting_btn value="Setting" class="s2w_config_btn" onclick="s2w_config();"></td>
+		<td><input type="button", id=next_btn value="Next_Step" class="next_btn" onclick="document.location.href='../s2web/wps_pin.html'"/></td>
+	</tr>
+	<tr>		
+		<td style=width:20px">Setting Result</td>
+		<td><input type="text" name = result id=resp_result value ="Success"></td>
+	</tr>
+</table>
+
+<WICED:section suffix="_success_set_ap_response"/>
+<table style="margin-left:auto;margin-right:auto;">
+	<script language="JavaScript" type="text/javascript">
+		WiFi20_Reset();
+	</script>
+	<tr>
+		<td style="color:#ff0000;font:bold 12px/100% Verdana, Arial, Helvetica, sans-serif">Success:It will be restart</td>
+	</tr>
+</table>
+
+<WICED:section suffix="_fail_set_ap_response"/>
+<table style="margin-left:auto;margin-right:auto;"> 
+	<tr>
+		<td><input type="button" id=ap_set_btn value="Set AP" class="ap_set_btn" onclick="s2w_config_ap();"></td>
+		<td style="color:#ff0000;font:bold 12px/100% Verdana, Arial, Helvetica, sans-serif">Fail:Setting value is wrong</td>
+	</tr>
+</table>
+
+<WICED:section suffix="_success_login"/>
+<table style="margin-left:auto;margin-right:auto;">
+	<script language="JavaScript" type="text/javascript">
+		var userid		= document.getElementById("username").value;
+		var password    = document.getElementById("password").value;
+
+		sessionStorage['userid'] = userid;
+		sessionStorage['password'] = password;
+		location.href="../s2web/s2w_main.html"
+	</script> 
+</table>
+<WICED:section suffix="_fail_login"/>
+<table style="margin-left:auto;margin-right:auto;"> 
+	<tr><td style="color:#ff0000;font:bold 12px/100% Verdana, Arial, Helvetica, sans-serif">Fail:Login information is wrong</td></tr>
+</table>
+
+
+<WICED:section suffix="_ota_response_start"/>
+<table style="margin-left:auto;margin-right:auto;">
+	<script laguage="JavaScript" type="text/javascript">
+		Start_OTA();
+	</script>
+	<tr>
+		<td style="color:#ff0000;font:bold 12px/100% Verdana, Arial, Helvetica, sans-serif">
+<WICED:section suffix="_ota_response_end"/>		
+		</td>
+	</tr>
+</table>
+
+<WICED:section suffix="_success_gpio_setting_response"/>
+<table style="margin-left:auto;margin-right:auto">
+	<tbody>
+		<tr><td colspan="2"><input type="button" value="Save settings" onclick="save_settings();" style="float:right" /></td></tr>
+		<tr><td style="color:#ff0000;font:bold 12px/100% Verdana, Arial, Helvetica, sans-serif">Success:GPIO Setting is changed</td>
+	</tbody>
+</table>
+
+<WICED:section suffix="_success_serial_setting_response"/>
+<table style="margin-left:auto;margin-right:auto;">
+	<script language="JavaScript" type="text/javascript">
+		WiFi20_Reset();
+	</script>
+	<tr>
+		<td style="color:#ff0000;font:bold 12px/100% Verdana, Arial, Helvetica, sans-serif">Success:It will be restart. Web Server stopped</td>
+	</tr>
+</table>
+
+<WICED:section suffix="_success_user_info_setting_response"/>
+<table style="margin-left:auto;margin-right:auto;">
+	<script language="JavaScript" type="text/javascript">
+		WiFi20_Reset();
+	</script>
+	<tr>
+		<td style="color:#ff0000;font:bold 12px/100% Verdana, Arial, Helvetica, sans-serif">Success:User Information is changed. It will be restart. Web Server stopped</td>
+	</tr>
+</table>
+
+<WICED:section suffix="_fail_user_info_setting_response"/>
+<table style="margin-left:auto;margin-right:auto;">
+    <tr>
+    	<td><input type="button" id=station_set_btn value="Setting" class="user_info_set_btn" onclick="s2w_user_info_setting();" ></td>
+	</tr>
+	<tr>
+		<td style="color:#ff0000;font:bold 12px/100% Verdana, Arial, Helvetica, sans-serif">Fail:User Information is wrong</td>
+	</tr>
+</table>
+<p><input style="vertical-align:bottom;float:left;margin-left:50px" type="button" value="< Main Page" onclick="document.location.href='../s2web/s2w_main.html'" /></p>

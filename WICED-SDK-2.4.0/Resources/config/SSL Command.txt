@@ -1,0 +1,33 @@
+
+* get the certificate from PKCS12
+openssl pkcs12 -clcerts  -nokeys -in cert.p12 -out usercert.pem
+
+* get the key from PKCS12
+openssl pkcs12  -nocerts -in cert.p12 -out userkey.pem
+
+* Certificate Information
+openssl x509 -text -noout -in usercert.pem
+
+* Key PEM to DER
+openssl rsa -inform per -in userkey.pem -outform der -out userkey.key
+
+* Certificate PEM to DER
+openssl x509 -inform per -in usercert.pem -outform der -out usercert.crt
+
+* CRT to DER
+openssl x509 -in mycert.crt -out mycert.der -outform DER
+
+* 인증서 만들기 (Self Signed)
+Issuer: C=KR, ST=Seoul, L=Nakseongdae-dong, Gwanak-gu, O=Coway, CN=Coway
+Issuer: C=KR, ST=Seoul, L=Nakseongdae-dong, Gwanak-gu, O=Coway, CN=Coway
+openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout new-key.key -out new-cert.pem
+openssl rsa -in new-key.key -out new-key.pem
+
+
+* SSL Client 
+openssl s_client -connect 17.172.233.65:2195 -certform der -cert union-cert.crt -keyform der -key union-key.key
+(openssl s_client -connect 17.172.233.65:2195 -certform pem -cert usercert.pem -keyform pem -key userkey.pem)
+
+
+openssl s_client -connect 74.125.31.193:443
+openssl s_client -connect 192.168.3.12:5000

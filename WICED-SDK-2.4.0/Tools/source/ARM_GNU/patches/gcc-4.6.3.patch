@@ -1,0 +1,334 @@
+diff -Naur gcc-4.6.3/gcc/config/arm/t-arm-elf gcc-4.6.3-arm/gcc/config/arm/t-arm-elf
+--- gcc-4.6.3-orig/gcc/config/arm/t-arm-elf	2011-01-04 07:52:22 +1100
++++ gcc-4.6.3-arm/gcc/config/arm/t-arm-elf	2012-03-09 10:36:50 +1100
+@@ -40,22 +40,27 @@
+ #MULTILIB_DIRNAMES    += fa526 fa626 fa606te fa626te fmp626 fa726te
+ #MULTILIB_EXCEPTIONS  += *mthumb*/*mcpu=fa526 *mthumb*/*mcpu=fa626
+ 
+-#MULTILIB_OPTIONS      += march=armv7
+-#MULTILIB_DIRNAMES     += thumb2
+-#MULTILIB_EXCEPTIONS   += march=armv7* marm/*march=armv7*
+-#MULTILIB_MATCHES      += march?armv7=march?armv7-a
+-#MULTILIB_MATCHES      += march?armv7=march?armv7-r
+-#MULTILIB_MATCHES      += march?armv7=march?armv7-m
+-#MULTILIB_MATCHES      += march?armv7=mcpu?cortex-a8
+-#MULTILIB_MATCHES      += march?armv7=mcpu?cortex-r4
+-#MULTILIB_MATCHES      += march?armv7=mcpu?cortex-m3
++MULTILIB_OPTIONS      += march=armv7/march=armv6-m
++MULTILIB_DIRNAMES     += v7m v6m
++MULTILIB_EXCEPTIONS   += march=armv7* marm/*march=armv7*
++MULTILIB_MATCHES      += march?armv7=march?armv7-a
++MULTILIB_MATCHES      += march?armv7=march?armv7-r
++MULTILIB_MATCHES      += march?armv7=march?armv7-m
++MULTILIB_MATCHES      += march?armv7=mcpu?cortex-a8
++MULTILIB_MATCHES      += march?armv7=mcpu?cortex-r4
++MULTILIB_MATCHES      += march?armv7=mcpu?cortex-m3
++MULTILIB_MATCHES      += march?armv7=mcpu?cortex-m4
++
++MULTILIB_EXCEPTIONS   += march=armv6-m
++MULTILIB_MATCHES      += march?armv6-m=mcpu?cortex-m1
++MULTILIB_MATCHES      += march?armv6-m=mcpu?cortex-m0
+ 
+ # Not quite true.  We can support hard-vfp calling in Thumb2, but how do we
+ # express that here?  Also, we really need architecture v5e or later
+ # (mcrr etc).
+-MULTILIB_OPTIONS       += mfloat-abi=hard
+-MULTILIB_DIRNAMES      += fpu
+-MULTILIB_EXCEPTIONS    += *mthumb/*mfloat-abi=hard*
++#MULTILIB_OPTIONS       += mfloat-abi=hard
++#MULTILIB_DIRNAMES      += fpu
++#MULTILIB_EXCEPTIONS    += *mthumb/*mfloat-abi=hard*
+ #MULTILIB_EXCEPTIONS    += *mcpu=fa526/*mfloat-abi=hard*
+ #MULTILIB_EXCEPTIONS    += *mcpu=fa626/*mfloat-abi=hard*
+ 
+@@ -63,9 +68,9 @@
+ # MULTILIB_DIRNAMES   += ep9312
+ # MULTILIB_EXCEPTIONS += *mthumb/*mcpu=ep9312*
+ # 	
+-# MULTILIB_OPTIONS     += mlittle-endian/mbig-endian
+-# MULTILIB_DIRNAMES    += le be
+-# MULTILIB_MATCHES     += mbig-endian=mbe mlittle-endian=mle
++MULTILIB_OPTIONS     += mlittle-endian
++MULTILIB_DIRNAMES    += le
++MULTILIB_MATCHES     += mlittle-endian=mle
+ # 
+ # MULTILIB_OPTIONS    += mhard-float/msoft-float
+ # MULTILIB_DIRNAMES   += fpu soft
+
+diff -Naur gcc-4.6.3/gcc/configure gcc-4.6.3-arm/gcc/configure
+--- gcc-4.6.3/gcc/configure	2011-11-21 08:24:07 +1100
++++ gcc-4.6.3-arm/gcc/configure	2012-04-10 16:16:12 +1000
+@@ -3365,10 +3365,10 @@
+ fi
+ 
+ if test x"${DEFAULT_LINKER+set}" = x"set"; then
+-  if test ! -x "$DEFAULT_LINKER"; then
++  if $DEFAULT_LINKER -v < /dev/null 2>&1 | grep GNU > /dev/null; then
++    gnu_ld_flag=yes
++  else
+     as_fn_error "cannot execute: $DEFAULT_LINKER: check --with-ld or env. var. DEFAULT_LINKER" "$LINENO" 5
+-  elif $DEFAULT_LINKER -v < /dev/null 2>&1 | grep GNU > /dev/null; then
+-    gnu_ld_flag=yes
+   fi
+ 
+ cat >>confdefs.h <<_ACEOF
+@@ -3430,10 +3430,10 @@
+ fi
+ 
+ if test x"${DEFAULT_ASSEMBLER+set}" = x"set"; then
+-  if test ! -x "$DEFAULT_ASSEMBLER"; then
++  if $DEFAULT_ASSEMBLER -v < /dev/null 2>&1 | grep GNU > /dev/null; then
++    gas_flag=yes
++  else
+     as_fn_error "cannot execute: $DEFAULT_ASSEMBLER: check --with-as or env. var. DEFAULT_ASSEMBLER" "$LINENO" 5
+-  elif $DEFAULT_ASSEMBLER -v < /dev/null 2>&1 | grep GNU > /dev/null; then
+-    gas_flag=yes
+   fi
+ 
+ cat >>confdefs.h <<_ACEOF
+@@ -8891,16 +8891,16 @@
+ 
+ fi
+ 
+-ac_fn_c_check_type "$LINENO" "caddr_t" "ac_cv_type_caddr_t" "$ac_includes_default"
+-if test "x$ac_cv_type_caddr_t" = x""yes; then :
+-
+-else
+-
+-cat >>confdefs.h <<_ACEOF
+-#define caddr_t char *
+-_ACEOF
+-
+-fi
++#ac_fn_c_check_type "$LINENO" "caddr_t" "ac_cv_type_caddr_t" "$ac_includes_default"
++#if test "x$ac_cv_type_caddr_t" = x""yes; then :
++#
++#else
++#
++#cat >>confdefs.h <<_ACEOF
++##define caddr_t char *
++#_ACEOF
++#
++#fi
+ 
+ 
+ 
+diff -Naur gcc-4.6.3/gcc/Makefile.in gcc-4.6.3-arm/gcc/Makefile.in
+--- gcc-4.6.3/gcc/Makefile.in	2011-08-20 17:51:09.000000000 +1000
++++ gcc-4.6.3-arm/gcc/Makefile.in	2012-05-24 15:38:43.120145757 +1000
+@@ -540,9 +540,9 @@
+ # --------
+ 
+ # Directory in which the compiler finds libraries etc.
+-libsubdir = $(libdir)/gcc/$(target_noncanonical)/$(version)
++libsubdir = $(libdir)
+ # Directory in which the compiler finds executables
+-libexecsubdir = $(libexecdir)/gcc/$(target_noncanonical)/$(version)
++libexecsubdir = $(libexecdir)
+ # Directory in which plugin headers are installed
+ plugin_includedir = $(libsubdir)/plugin/include
+ # Used to produce a relative $(gcc_tooldir) in gcc.o
+@@ -730,7 +730,7 @@
+ LIBCONVERT =
+ 
+ # Control whether header files are installed.
+-INSTALL_HEADERS=install-headers install-mkheaders
++INSTALL_HEADERS=install-headers
+ 
+ # Control whether Info documentation is built and installed.
+ BUILD_INFO = @BUILD_INFO@
+@@ -2198,8 +2198,8 @@
+ 
+ DRIVER_DEFINES = \
+   -DSTANDARD_STARTFILE_PREFIX=\"$(unlibsubdir)/\" \
+-  -DSTANDARD_EXEC_PREFIX=\"$(libdir)/gcc/\" \
+-  -DSTANDARD_LIBEXEC_PREFIX=\"$(libexecdir)/gcc/\" \
++  -DSTANDARD_EXEC_PREFIX=\"$(libdir)/\" \
++  -DSTANDARD_LIBEXEC_PREFIX=\"$(libexecdir)/\" \
+   -DDEFAULT_TARGET_VERSION=\"$(version)\" \
+   -DDEFAULT_TARGET_MACHINE=\"$(target_noncanonical)\" \
+   -DSTANDARD_BINDIR_PREFIX=\"$(bindir)/\" \
+diff -Naur gcc-4.6.3/lto-plugin/Makefile.in gcc-4.6.3-arm/lto-plugin/Makefile.in
+--- gcc-4.6.3/lto-plugin/Makefile.in	2012-01-04 00:15:21.000000000 +1100
++++ gcc-4.6.3-arm/lto-plugin/Makefile.in	2012-05-24 16:06:47.082842257 +1000
+@@ -227,7 +227,7 @@
+ ACLOCAL_AMFLAGS = -I .. -I ../config
+ AUTOMAKE_OPTIONS = no-dependencies
+ gcc_version := $(shell cat $(top_srcdir)/../gcc/BASE-VER)
+-libexecsubdir := $(libexecdir)/gcc/$(target_noncanonical)/$(gcc_version)
++libexecsubdir := $(libexecdir)
+ AM_CPPFLAGS = -I$(top_srcdir)/../include $(DEFS)
+ AM_CFLAGS = @ac_lto_plugin_warn_cflags@
+ AM_LIBTOOLFLAGS = --tag=disable-static
+diff -Naur gcc-4.6.3/fixincludes/Makefile.in gcc-4.6.3-arm/fixincludes/Makefile.in
+--- gcc-4.6.3/fixincludes/Makefile.in	2012-05-24 16:13:37.509577507 +1000
++++ gcc-4.6.3-arm/fixincludes/Makefile.in	2012-05-24 16:13:22.985412257 +1000
+@@ -178,6 +178,8 @@
+ 	@rm -f ./check.sh
+ 
+ install : all
++
++junk:
+ 	-rm -rf $(DESTDIR)$(itoolsdir)
+ 	$(mkinstalldirs) $(DESTDIR)$(itoolsdir) 
+ 	$(mkinstalldirs) $(DESTDIR)$(itoolsdatadir)/include
+@@ -189,6 +191,8 @@
+ 	$(INSTALL_SCRIPT) mkheaders $(DESTDIR)$(itoolsdir)/mkheaders
+ 
+ install-strip: install
++
++junk2:
+ 	test -z '$(STRIP)' \
+ 	  || $(STRIP) $(DESTDIR)$(itoolsdir)/fixincl@EXEEXT@
+
+diff -Naur gcc-4.6.3/configure gcc-4.6.3-arm/configure
+--- gcc-4.6.3/configure	2011-12-18 21:03:44.000000000 +1100
++++ gcc-4.6.3-arm/configure	2012-05-24 16:24:48.498796757 +1000
+@@ -6764,7 +6764,7 @@
+     echo 1>&2 '***' --with-headers is only supported when cross compiling
+     exit 1
+   fi
+-  if test x"${with_headers}" != xyes ; then
++  if test x"${with_headers}" == x ; then
+     x=${gcc_cv_tool_prefix}
+     copy_dirs="${copy_dirs} ${with_headers} $x/${target_noncanonical}/sys-include"
+   fi
+diff -Naur gcc-4.6.3/gcc/gcc.c gcc-4.6.3-arm/gcc/gcc.c
+--- gcc-4.6.3/gcc/gcc.c	2011-02-23 13:04:43.000000000 +1100
++++ gcc-4.6.3-arm/gcc/gcc.c	2012-06-04 17:29:56.354256087 +1000
+@@ -2315,19 +2315,24 @@
+    Return 0 if not found, otherwise return its name, allocated with malloc.  */
+ 
+ static char *
+-find_a_file (const struct path_prefix *pprefix, const char *name, int mode,
++find_a_file (const struct path_prefix *pprefix, const char *myname, int mode,
+ 	     bool do_multi)
+ {
+   struct file_at_path_info info;
++  char* name = (char*)myname;
+ 
+ #ifdef DEFAULT_ASSEMBLER
+-  if (! strcmp (name, "as") && access (DEFAULT_ASSEMBLER, mode) == 0)
+-    return xstrdup (DEFAULT_ASSEMBLER);
++  if (! strcmp (name, "as"))
++  {
++    name= xstrdup ( DEFAULT_ASSEMBLER);
++  }
+ #endif
+ 
+ #ifdef DEFAULT_LINKER
+-  if (! strcmp(name, "ld") && access (DEFAULT_LINKER, mode) == 0)
+-    return xstrdup (DEFAULT_LINKER);
++  if (! strcmp(name, "ld"))
++  {
++    name= xstrdup (DEFAULT_LINKER);
++  }
+ #endif
+ 
+   /* Determine the filename to execute (special case for absolute paths).  */
+@@ -3562,7 +3567,7 @@
+     {
+       gcc_exec_prefix = get_relative_prefix (decoded_options[0].arg,
+ 					     standard_bindir_prefix,
+-					     standard_exec_prefix);
++					     standard_bindir_prefix);
+       gcc_libexec_prefix = get_relative_prefix (decoded_options[0].arg,
+ 					     standard_bindir_prefix,
+ 					     standard_libexec_prefix);
+@@ -3857,24 +3862,24 @@
+ #endif
+       add_prefix (&startfile_prefixes, standard_exec_prefix, "BINUTILS",
+ 		  PREFIX_PRIORITY_LAST, 1, 0);
++      gcc_exec_prefix = xstrdup(tooldir_base_prefix);
+     }
+ 
+   gcc_assert (!IS_ABSOLUTE_PATH (tooldir_base_prefix));
+-  tooldir_prefix = concat (tooldir_base_prefix, spec_machine,
+-			   dir_separator_str, NULL);
++  tooldir_prefix = xstrdup(gcc_exec_prefix);
+ 
+   /* Look for tools relative to the location from which the driver is
+      running, or, if that is not available, the configured prefix.  */
+-  tooldir_prefix
+-    = concat (gcc_exec_prefix ? gcc_exec_prefix : standard_exec_prefix,
+-	      spec_machine, dir_separator_str,
+-	      spec_version, dir_separator_str, tooldir_prefix, NULL);
+ 
+   add_prefix (&exec_prefixes,
+-	      concat (tooldir_prefix, "bin", dir_separator_str, NULL),
++	      concat (tooldir_prefix /*, "bin", dir_separator_str*/, NULL),
+ 	      "BINUTILS", PREFIX_PRIORITY_LAST, 0, 0);
+-  add_prefix (&startfile_prefixes,
+-	      concat (tooldir_prefix, "lib", dir_separator_str, NULL),
++
++      tooldir_prefix = get_relative_prefix (decoded_options[0].arg,
++					     standard_bindir_prefix,
++					     standard_exec_prefix);
++
++  add_prefix (&startfile_prefixes, concat (tooldir_prefix, NULL ),
+ 	      "BINUTILS", PREFIX_PRIORITY_LAST, 0, 1);
+ 
+ #if defined(TARGET_SYSTEM_ROOT_RELOCATABLE) && !defined(VMS)
+@@ -6228,9 +6233,8 @@
+ 
+   /* Read specs from a file if there is one.  */
+ 
+-  machine_suffix = concat (spec_machine, dir_separator_str,
+-			   spec_version, dir_separator_str, NULL);
+-  just_machine_suffix = concat (spec_machine, dir_separator_str, NULL);
++  machine_suffix = xstrdup("");
++  just_machine_suffix = concat (""/*spec_machine, dir_separator_str*/, NULL);
+ 
+   specs_file = find_a_file (&startfile_prefixes, "specs", R_OK, true);
+   /* Read the specs file unless it is a default one.  */
+diff -Naur gcc-4.6.3/libstdc++-v3/python/Makefile.in gcc-4.6.3-arm/libstdc++-v3/python/Makefile.in
+--- gcc-4.6.3/libstdc++-v3/python/Makefile.in	2012-05-24 16:13:37.509577507 +1000
++++ gcc-4.6.3-arm/libstdc++-v3/python/Makefile.in	2012-05-24 16:24:48.498796757 +1000
+@@ -426,7 +426,7 @@
+ 
+ info-am:
+ 
+-install-data-am: install-data-local install-nobase_pythonDATA
++install-data-am:
+ 
+ install-dvi: install-dvi-am
+ 
+diff -Naur gcc-4.6.3/libstdc++-v3/configure gcc-4.6.3-arm/libstdc++-v3/configure
+--- gcc-4.6.3/libstdc++-v3/configure	2012-05-24 16:13:37.509577507 +1000
++++ gcc-4.6.3-arm/libstdc++-v3/configure	2012-05-24 16:24:48.498796757 +1000
+@@ -65638,7 +65638,7 @@
+   if test x"$glibcxx_toolexecdir" = x"no"; then
+     if test -n "$with_cross_host" &&
+        test x"$with_cross_host" != x"no"; then
+-      glibcxx_toolexecdir='${exec_prefix}/${host_alias}'
++      glibcxx_toolexecdir='${exec_prefix}'
+       glibcxx_toolexeclibdir='${toolexecdir}/lib'
+     else
+       glibcxx_toolexecdir='${libdir}/gcc/${host_alias}'
+
+diff -Naur gcc-4.6.3/libgcc/Makefile.in gcc-4.6.3-arm/libgcc/Makefile.in
+--- gcc-4.6.3/libgcc/Makefile.in	2012-05-24 16:13:37.509577507 +1000
++++ gcc-4.6.3-arm/libgcc/Makefile.in	2012-05-24 16:24:48.498796757 +1000
+@@ -173,7 +173,7 @@
+ STRIP_FOR_TARGET = $(STRIP)
+ 
+ # Directory in which the compiler finds libraries etc.
+-libsubdir = $(libdir)/gcc/$(host_noncanonical)/$(version)
++libsubdir = $(libdir)
+ # Used to install the shared libgcc.
+ slibdir = @slibdir@
+ # Maybe used for DLLs on Windows targets.
+
+diff -Naur gcc-4.6.3/libiberty/Makefile.in gcc-4.6.3-arm/libiberty/Makefile.in
+--- gcc-4.6.3/libiberty/Makefile.in	2012-05-24 16:13:37.509577507 +1000
++++ gcc-4.6.3-arm/libiberty/Makefile.in	2012-05-24 16:24:48.498796757 +1000
+@@ -340,7 +340,7 @@
+ @MAINT@	echo stamp > stamp-functions
+ 
+ INSTALL_DEST = @INSTALL_DEST@
+-install: install_to_$(INSTALL_DEST) install-subdir
++install: 
+ install-strip: install
+ 
+ .PHONY: install install-strip
+

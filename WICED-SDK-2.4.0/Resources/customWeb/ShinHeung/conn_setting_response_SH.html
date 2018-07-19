@@ -1,0 +1,61 @@
+<!-- Customizing for Shin-Heung Precision -->
+<WICED:section suffix="_success_login"/>
+<table style="margin-left:auto;margin-right:auto;">
+	<script language="JavaScript" type="text/javascript">
+		var userid		= document.getElementById("username").value;
+		var password    = document.getElementById("password").value;
+
+		sessionStorage['userid'] = userid;
+		sessionStorage['password'] = password;
+		location.href="../customWeb/ShinHeung/main_SH.html"
+	</script> 
+</table>
+
+<WICED:section suffix="_success_response"/>
+<table style="margin-left:auto;margin-right:auto;"> 
+	<tr>
+		<td><input type="button" id=setting_btn value="Setting" class="s2w_config_btn" onclick="s2w_config();"></td>
+		<td><input type="button", id=next_btn value="Next_Step" class="next_btn" onclick="document.location.href='./conn_setting_station_SH.html'"/></td>
+	</tr>
+	<tr>		
+		<td style=width:20px">Setting Result</td>
+		<td><input type="text" name = result id=resp_result value ="Success"></td>
+	</tr>
+</table>
+
+
+<WICED:section suffix="_success_station_respose"/>
+<table style="margin-left:auto;margin-right:auto;"> 
+	<tr>
+		<td><input type="button" id=station_set_btn value="Setting" class="station_set_btn" onclick="s2w_config_station();"></td>
+		<td><input type="button", id=next_btn value="Next_Step" class="next_btn" onclick="document.location.href='./scan_page_outer_SH.html'"/></td>
+	</tr>
+	<tr>		
+		<td style=width:20px">Setting Result</td>
+		<td><input type="text" name = result id=resp_result value ="Success"></td>
+	</tr>
+</table>
+
+
+<WICED:section suffix="_success_AP_mode_response"/>
+<table style="margin-left:auto;margin-right:auto;"> 
+	<tr>
+		<td><input type="button" id=setting_btn value="Setting" class="s2w_config_btn" onclick="s2w_config();"></td>
+		<td><input type="button", id=next_btn value="Next_Step" class="next_btn" onclick="document.location.href='./conn_setting_apmode_SH.html'"/></td>
+	</tr>
+	<tr>		
+		<td style=width:20px">Setting Result</td>
+		<td><input type="text" name = result id=resp_result value ="Success"></td>
+	</tr>
+</table>
+
+
+<WICED:section suffix="_success_set_ap_response"/>
+<table style="margin-left:auto;margin-right:auto;">
+	<script language="JavaScript" type="text/javascript">
+		WiFi20_Reset();
+	</script>
+	<tr>
+		<td style="color:#ff0000;font:bold 12px/100% Verdana, Arial, Helvetica, sans-serif">Success:WLAN Interface will be restart</td>
+	</tr>
+</table>

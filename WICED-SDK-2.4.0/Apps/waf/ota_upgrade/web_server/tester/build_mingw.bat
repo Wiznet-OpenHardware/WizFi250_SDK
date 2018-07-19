@@ -1,0 +1,1 @@
+gcc tester.c -o tester.exe -I/include/ -lws2_32 -g

@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<title> WLAN Interface Security Setting </title>
+	<script src="../scripts/general_ajax_script.js" type="text/javascript"></script>
+	<script language="JavaScript" type="text/javascript">
+	    function do_join( )
+	    {
+	        /* sekim 20150212 Web Configuration Token Change "#~`" => "#~#" for Chrome-problem of Encored */
+	        /* var temp = location.href.split("#~`"); */
+			var temp = location.href.split("#~#");
+			var ssid = temp[1];
+			var sec  = temp[2];
+
+			s='as0=' + encodeURIComponent(ssid) + '+^&at0=' + sec + '+^&ap0=' + encodeURIComponent(document.getElementById('key').value);
+			
+			document.getElementById('dim').style.display = "block";
+			document.getElementById('conndisp').innerHTML = "Device Started<br/>Web server and access point stopped<br/>See UART for further information"
+			do_ajax( '/connect?' + s, null, null, 0, null, null, null, null );
+	    }
+	</script>
+	</head>
+	  <body style="font-family:verdana;" >
+	     <table border='0' cellpadding='0' cellspacing='0' width="98%">
+	      <tr style="height:20px"><td>&nbsp;</td></tr>
+	      <tr style="border-collapse: collapse; padding: 0;">
+	        <td style="width:20px"></td>
+	        <td style="width:150px"><img src="./image/ShinHeungLogo.jpg" width="150" height="50" alt="ShinHeung Logo" /></td>
+	        <td style="width:20px;"></td>
+	        <td style="vertical-align:middle; text-align:center; font: bold 25px/100% Verdana, Arial, Helvetica, sans-serif;">
+	        WLAN Interface Security Setting
+	        </td>
+	        <td style="width:137px;"></td>
+	      </tr>
+	      <tr><td>&nbsp;</td></tr>
+	    </table>
+	    <noscript><h2>Javascript is required for this page to work correctly.</h2></noscript>
+	
+
+		<script src="../../scripts/general_ajax_script.js" type="text/javascript"></script>
+	    <script type="text/javascript">
+	    	CheckLogined();
+	    </script>
+
+		<table align="center">
+			<tr><td>Security Key :</td><td><input id="key" name="key" size="14"></input></td></tr>
+			<br></br>
+			<tr>
+				<td><input type="button" name="Confirm_btn" value="Confirm" onclick="do_join()" style="width:110px;height:30px;font-size:15px"></input>
+				</td>
+				<td><input type="button" name="close_login" value="Cancel" style="width:120px;height:30px;font-size:15px" onclick="document.location.href='./scan_page_outer_SH.html'"></input></td>
+			</tr>
+		</table>
+		
+		<!-- This DIV allows the main part of the page to be disabled with a 'dimmed' effect, and displays a message center-screen -->
+	    <div id="dim" style="display: none; background: #000;position: fixed; left: 0; top: 0;width: 100%; height: 100%;opacity: .80;z-index: 9999;text-align: center">
+	      <h2 id="conndisp" style="color:#ff0000;position:relative;top:50%"></h2>
+	    </div>
+	</body>
+</html>

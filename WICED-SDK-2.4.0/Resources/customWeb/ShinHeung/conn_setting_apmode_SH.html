@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>WizFi250 Configuration</title>
+    <style  type="text/css"><!-- .normal { background-color: #ffffff; } .highlight { background-color: #8f0000;  } --></style>
+    <script src="../../scripts/general_ajax_script.js" type="text/javascript" ></script>
+    <script type="text/javascript">
+    function s2w_config_ap()
+    {
+		var wifi_ssid		= document.getElementById("SSID").value;
+    	var wifi_ip         = document.getElementById("Wi_Fi_IP").value;
+		var gateway_ip      = document.getElementById("Gateway_IP").value;
+		var subnet_mask     = document.getElementById("Subnet_Mask").value;
+		var select          = document.getElementById("sel_security");
+		var select_security = select.options[select.selectedIndex].value;
+		var pre_shared_key  = document.getElementById("Pre_Shared_Key").value;
+    	
+		
+		var s = "SD:"+encodeURIComponent(wifi_ssid)+"/WI:"+encodeURIComponent(wifi_ip)+"/GI:"+encodeURIComponent(gateway_ip)+"/SM:"+encodeURIComponent(subnet_mask)+"/SS:"+encodeURIComponent(select_security)+"/PK:"+encodeURIComponent(pre_shared_key)+"^";
+		do_ajax( '/s2wconfig_ap?'+s, 'setting_apmode_response', null, 0, null, null, 'Failed', null);
+    }
+    
+    function selectSecEvent(selectObj)
+    {
+  	  if(selectObj.value == "OPEN")
+  	  {
+  		  document.getElementById('pre_shared_key').innerHTML="<tr><td style=\"width:150px\">Pre-Shared Key</td>		<td><input style=\"width:150px\" type=\"text\" name=\"Pre_Shared_Key\" id=\"Pre_Shared_Key\" value=\"\" disabled></input></td></tr>"
+  	  }
+  	  else
+  	  {
+  		  document.getElementById('pre_shared_key').innerHTML="<tr><td style=\"width:150px\">Pre-Shared Key</td>		<td><input style=\"width:150px\" type=\"text\" name=\"Pre_Shared_Key\" id=\"Pre_Shared_Key\" value=\"\"></input></td></tr>"
+  	  }
+    }
+    
+    function WiFi20_Reset()
+    {
+    	do_ajax( '/s2w_reset?', null, null, 0, null, null, 'Failed', null);
+    }
+	</script>    
+  </head>
+  <body style="font-family:verdana;" >
+     <table border='0' cellpadding='0' cellspacing='0' width="98%">
+      <tr style="height:20px"><td>&nbsp;</td></tr>
+      <tr style="border-collapse: collapse; padding: 0;">
+        <td style="width:20px"></td>
+        <td style="width:150px"><img src="./image/ShinHeungLogo.jpg" width="150" height="50" alt="ShinHeung Logo" /></td>
+        <td style="width:20px;"></td>
+        <td style="vertical-align:middle; text-align:center; font: bold 25px/100% Verdana, Arial, Helvetica, sans-serif;">
+        WLAN Interface Serial to Wi-Fi Setting
+        </td>
+        <td style="width:137px;"></td>
+      </tr>
+      <tr><td>&nbsp;</td></tr>
+    </table>
+    <noscript><h2>Javascript is required for this page to work correctly.</h2></noscript>
+
+	<script src="../../scripts/general_ajax_script.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	CheckLogined();
+    </script>
+
+    <table style="margin-left:auto;margin-right:auto;" >
+	    <tr>
+	    	<td style="vertical-align:middle; text-align:left; font: bold 15px/100% Verdana, Arial, Helvetica, sans-serif;">
+	    	Step 2 : WLAN Interface Set AP Mode
+	    	</td>
+	    </tr>
+	</table>
+	<br></br>
+	<form name="s2w_ap_set_form" action="">
+    <table style="margin-left:auto;margin-right:auto;" >
+	    <tr>
+	    	<td style="vertical-align:middle; text-align:left; font: bold 15px/100% Verdana, Arial, Helvetica, sans-serif;">
+	    	AP Setting
+	    	</td>
+	    </tr>
+	</table>
+
+	<table style="margin-left:auto;margin-right:auto;">
+		<tr><td style="width:150px">SSID</td>			<td><input style="width:150px" type="text" name="SSID" id="SSID" value="SAM4S_PRT"</input></td></tr>
+		<tr><td style="width:150px">Security</td>
+			<td>
+				<select style="width:150px" name = select_security class='sel_security' id='sel_security' onChange="javascript:selectSecEvent(this)")>
+					<option style="width:150px" value="OPEN"> OPEN </option>
+					<option style="width:150px" value="WPA"> WPA1/TKIP </option>
+					<option style="width:150px" value="WPAAES"> WPA1/AES </option>
+					<option style="width:150px" value="WPA2AES"> WPA2/AES </option>
+					<option style="width:150px" value="WPA2TKIP"> WPA2/TKIP </option>
+					<option style="width:150px" value="WPA2"> WPA2/Mixed </option>
+				</select> 
+			</td>
+		</tr>				
+		<tr id="pre_shared_key"><td style="width:150px">Pre-Shared Key</td>		<td><input style="width:150px" type="text" name="Pre_Shared_Key" id="Pre_Shared_Key" value="" disabled></input></td></tr>
+	</table>
+	<br></br>
+    <table style="margin-left:auto;margin-right:auto;" >
+	    <tr>
+	    	<td style="vertical-align:middle; text-align:left; font: bold 15px/100% Verdana, Arial, Helvetica, sans-serif;">
+        	AP Network Setting
+	    	</td>
+	    </tr>
+	</table>
+	
+	<table style="margin-left:auto;margin-right:auto;">
+	    <tr><td style=width:150px">Wi-Fi IP Address</td>    	<td><input style="width:150px" type="text" name="Wi_Fi_IP" id="Wi_Fi_IP" value="192.168.12.1"</input></td></tr>
+	    <tr><td style=width:150px">Gateway IP Address</td>   <td><input style="width:150px" type="text" name="Gateway_IP" id="Gateway_IP" value="192.168.12.1"</input></td></tr>
+	    <tr><td style=width:150px">Subnet Mask</td>			<td><input style="width:150px" type="text" name="Subnet_Mask" id="Subnet_Mask" value="255.255.255.0"</input></td></tr>
+	</table>
+
+
+    <!-- This DIV allows the main part of the page to be disabled with a 'dimmed' effect, and displays a message center-screen -->
+    <div style="margin-left:auto;mamrgin-right:auto;" id ="setting_apmode_response">
+    	<table style="margin-left:auto;margin-right:auto;">
+	  	    <tr>
+	  	    	<td><input type="button" id=ap_set_btn value="Set AP" class="ap_set_btn" onclick="s2w_config_ap();"></td>
+			</tr>
+    	</table>
+    </div>
+    <p><input style="vertical-align:bottom;float:left;margin-left:50px" type="button" value="< Return to Step1" onclick="document.location.href='./conn_setting_SH.html#conn_setting'" /></p>
+	</form>
+  </body>
+</html>
+
+
+

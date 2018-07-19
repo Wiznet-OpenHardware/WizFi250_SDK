@@ -1,0 +1,34 @@
+--- a/Wiced/Network/NetX_Duo/wwd/wwd_network.c
++++ b/Wiced/Network/NetX_Duo/wwd/wwd_network.c
+@@ -303,6 +303,19 @@ void host_network_process_ethernet_data( wiced_buffer_t buffer, wiced_interface_
+ 
+         if ( ( ethertype == WICED_ETHERTYPE_IPv4 ) || ethertype == WICED_ETHERTYPE_IPv6 )
+         {
++#ifdef FIX_UNICAST_DHCP_OFFERS
++            NX_IP_HEADER*  ip_header  = (NX_IP_HEADER*)packet_ptr->nx_packet_prepend_ptr;
++            NX_UDP_HEADER* udp_header = (NX_UDP_HEADER*)(packet_ptr -> nx_packet_prepend_ptr + sizeof(NX_IP_HEADER));
++            UINT sender_port          = (UINT)(udp_header->nx_udp_header_word_0 >> 16);
++            ULONG destination_ip      = ip_header->nx_ip_header_destination_ip;
++
++            /* Check if a DHCP server has sent us a unicast packet instead of broadcast */
++            if ( ( sender_port == 67 ) && ( destination_ip != 0xFFFFFFFF ) && ( destination_ip != ip_ptr->nx_ip_address ) )
++            {
++                    ip_header->nx_ip_header_destination_ip = 0xFFFFFFFF;
++            }
++#endif
++
+ #ifdef NX_DIRECT_ISR_CALL
+             _nx_ip_packet_receive(ip_ptr, packet_ptr);
+ #else
+--- a/Wiced/Network/NetX_Duo/ver5.6/nx_user.h
++++ b/Wiced/Network/NetX_Duo/ver5.6/nx_user.h
+@@ -38,7 +38,8 @@
+ 
+ 
+ 
+-
++#define NX_DISABLE_IP_RX_CHECKSUM
++#define NX_DISABLE_UDP_RX_CHECKSUM
+ 
+ 
+ /* This define enabled simple IPv6 multicast group join/leave function.  By default

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="refresh" content="1"/>
+    <title>Configuration</title>
+    <style  type="text/css"><!-- .normal { background-color: #ffffff; } .highlight { background-color: #8f0000;  } --></style>
+    <script src="../scripts/general_ajax_script.js" type="text/javascript" ></script>
+    <script type="text/javascript">
+	    function getElementsByClassName(className)
+    	{
+    		if( document.getElementsByClassName)
+    		{
+    			return document.getElementsByClassName(className);	
+    		}
+    		else
+    		{
+    	          var a = [];
+    	          var els = document.getElementsByTagName("*");
+    	          for ( var i = 0, j = els.length ; i < j ; i++ ) {
+    	            if ((" "+els.item(i).className+" ").indexOf(" " + className + " ") != -1)
+    	              a.push(els.item(i));
+    	          }
+    	          return a;
+    		}
+    	}
+	</script>    
+  </head>
+  <body style="font-family:verdana;" >
+     <table border='0' cellpadding='0' cellspacing='0' width="98%">
+      <tr style="height:20px"><td>&nbsp;</td></tr>
+      <tr style="border-collapse: collapse; padding: 0;">
+        <td style="width:20px"></td>
+        <td id="logo_path" style="width:117px"></td>
+        <td style="width:20px;"></td>
+        <td id="title" style="vertical-align:middle; text-align:center; font: bold 25px/100% Verdana, Arial, Helvetica, sans-serif;">
+        </td>
+        <td style="width:137px;"></td>
+      </tr>
+      <tr><td>&nbsp;</td></tr>
+    </table>
+    <noscript><h2>Javascript is required for this page to work correctly.</h2></noscript>
+
+	<script src="../scripts/general_ajax_script.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	CheckLogined();
+    	SetCustomLogoTitle("GPIO Control");
+    </script>
+
+    <form id="gpio_config_form" action="">
+    	<table border="1" style="margin-left:auto;margin-right:auto;">
+    			<tr><td style=width:150px"><b>GPIO NUMBER</b></td><td style=width:150px"><b>GPIO MODE</b></td><td style=width:150px"><b>GPIO VALUE</b></td></tr>
+    		<tbody>
+<WICED:section suffix="_get_gpio_mode"/>
+	        <tr><td class="label_id">String</td>
+				 <td><input width="150px" style="width:150px" type="text" class="gpio_mode" readonly/>	        		
+			    <script type="text/javascript">
+	/* <![CDATA[ */
+<WICED:section suffix="_get_gpio_mode_end"/>
+      getElementsByClassName("label_id")[elem_num].innerHTML = labelname;
+      getElementsByClassName("gpio_mode")[elem_num].name = labelname;
+      getElementsByClassName("gpio_mode")[elem_num].value = gpio_mode;
+	/* ]]> */
+    </script>
+</td>
+<WICED:section suffix="_get_gpio_value"/>
+ 				<td><input width="150px" style="width:150px" type="text" class="gpio_value" id="gpio_value" readonly/>	        		
+			    <script type="text/javascript">
+	/* <![CDATA[ */
+<WICED:section suffix="_get_gpio_value_end"/>
+		getElementsByClassName("gpio_value")[elem_num].value = labelname;
+		getElementsByClassName("gpio_value")[elem_num].value = gpio_value;
+	/* ]]> */
+    </script>
+</td></tr>
+
+<WICED:section suffix="_get_gpio_end"/>
+		</tbody>
+	</table>
+</form>
+
+<WICED:section suffix="_gpio_settings_bottom"/>
+    <input style="vertical-align:bottom;float:left;margin-right:50px" type="button" value="< Return to Step1" onclick="document.location.href='../s2web/gpio_control_main.html'" />
+  </body>
+</html>

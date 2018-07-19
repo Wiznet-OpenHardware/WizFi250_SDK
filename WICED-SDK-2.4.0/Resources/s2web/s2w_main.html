@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Configuration</title>
+    <style  type="text/css"><!-- .normal { background-color: #ffffff; } .highlight { background-color: #8f0000;  } --></style>
+    <style type="text/css" >body{ text-align:center; } </style>
+    
+	<script src="../scripts/general_ajax_script.js" type="text/javascript"></script>
+    <script type="text/javascript">
+	    function conn_setting()
+	    {
+	    	var conf_method = "conn_setting";
+	    	location.href="../s2web/conn_setting.html#" + conf_method
+	    }
+	    function wps_pbc()
+	    {
+	    	var conf_method = "wps_pbc";
+	    	location.href="../s2web/conn_setting_wps.html#" + conf_method
+	    }
+	    function wps_pin()
+	    {
+	    	var conf_method = "wps_pin";
+	    	location.href="../s2web/conn_setting_wps.html#" + conf_method
+	    }
+	</script>
+    <script type="text/javascript">
+	    function function_s2web_main()
+	    {
+	    	do_ajax('/s2web_main?', 's2web_main_response', null, 0, null, null, 'Failed', null);
+	    }
+	</script>    
+  </head>
+  <body style="font-family:verdana;" onload="function_s2web_main()">
+    <table border='0' cellpadding='0' cellspacing='0' width="98%">
+      <tr style="height:20px"><td>&nbsp;</td></tr>
+      <tr style="border-collapse: collapse; padding: 0;">
+        <td style="width:20px"></td>
+        <!-- <td style="width:117px"><img src="../images/wiznet_logo.png" alt="Wiznet Logo" /></td> -->
+        <td id="logo_path" style="width:117px"></td>
+        <td style="width:20px;"></td>
+        <td id="title" style="vertical-align:middle; text-align:center; font: bold 25px/100% Verdana, Arial, Helvetica, sans-serif;"></td>
+        <td style="width:137px;"></td>
+      </tr>
+      <tr><td>&nbsp;</td></tr>
+    </table>
+    
+    <noscript><h2>Javascript is required for this page to work correctly.</h2></noscript>
+
+	<script src="../scripts/general_ajax_script.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	CheckLogined();
+    	SetCustomLogoTitle("Configuration");
+    </script>
+    
+    <h3 style="text-align:center">Select a configuration method ...</h3>
+    <table border="0" cellpadding="20" style="margin-left:auto;margin-right:auto;border-collapse:collapse;">
+    
+    <div align="center" id="s2web_main_response" >Loading Menu.....</div>
+        
+    </table>
+
+  </body>
+</html>

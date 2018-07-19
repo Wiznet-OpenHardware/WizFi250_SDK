@@ -1,0 +1,8 @@
+/* 
+ * The MAC address of the Wi-Fi device may be configured in one of several places as 
+ * described in the document WICED-AN800-R Factory Programming Application Note.     
+ * Please read this document for further information.                                
+ */
+
+#define NVRAM_GENERATED_MAC_ADDRESS   "macaddr=02:0A:F7:f0:fd:c6"
+#define DCT_GENERATED_MAC_ADDRESS     "\x02\x0A\xF7\xc6\xf0\xfd"

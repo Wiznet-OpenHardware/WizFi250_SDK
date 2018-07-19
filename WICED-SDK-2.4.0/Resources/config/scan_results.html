@@ -1,0 +1,51 @@
+<form action="">
+  <table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td valign="top">
+        <table border="0" cellpadding="0" cellspacing="0" style="vertical-align:middle; text-align:left;">
+          <!-- 
+          <tr><td style="width:20px"></td><td>&nbsp;</td></tr>
+          <tr><td style="width:20px"></td><td><label>Enter a Password </label><input type="text" id="ap0" name="ap0" size="20" maxlength="64" /></td></tr>
+          <tr><td style="width:20px"></td><td>and then click <b>Join</b> to connect</td></tr>
+          <tr><td style="width:20px"></td><td>&nbsp;</td></tr>
+          <tr><td style="width:20px"></td><td>Or click <input type="button" onclick="location.reload()" value="Rescan"/></td></tr>
+           -->
+		  <tr><td style="width:20px"></td><td>&nbsp;</td></tr>
+          <tr><td style="width:20px"></td><td><input type="button" onclick="location.reload()" value="Rescan"/></td></tr>
+        </table>
+      </td>
+      <td style="width:40px">
+      </td>
+      <td valign="top">
+        <table style="vertical-align:middle; text-align:left;">
+          <tr>
+          	<th style="min-width:65px"></th>
+          	<th style="text-align:left;min-width:200px">Network Name</th>
+          	<th style="text-algin:left;min-width:200px">Security</th>
+          	<th style="text-align:left;min-width:200px">BSSID</th>
+          	<th style="text-align:left;min-width:100px">Signal</th>
+          </tr>
+<WICED:section suffix="_row"/>
+          <tr>
+          	<td><input type="button" value="Join" class="joinbtn" /></td>
+          	<td class="SSIDtd">SSID</td>
+          	<td><div class="SECtd">SECstr</div></td>
+          	<td><div class="BSSIDtd">BSSID</div></td>
+          	<td><div class="RSSItd">RSSI</div>
+            <script type="text/javascript">
+            /* <![CDATA[ */
+<WICED:section suffix="_row_end"/>
+            getElementsByClassName("joinbtn")[elem_num].onclick = new Function("do_conn( \""+ SSID +"\", "+ SEC +", "+ CH +", \""+ BSSID +"\" );" );
+            getElementsByClassName("SSIDtd")[elem_num].innerHTML = SSID;
+            getElementsByClassName("SECtd")[elem_num].innerHTML = SECstr;
+            getElementsByClassName("BSSIDtd")[elem_num].innerHTML = BSSID;
+            getElementsByClassName("RSSItd")[elem_num].innerHTML = RSSIstr;
+            /* ]]> */
+            </script>
+          </td></tr>
+<WICED:section suffix="_bottom"/>
+        </table>
+      </td>
+    </tr>
+  </table>
+</form>

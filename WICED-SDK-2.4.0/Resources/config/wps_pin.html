@@ -1,0 +1,61 @@
+<!--
+///////////////////////////////////////////////////
+ Not used in WizFi250 Application
+/////////////////////////////////////////////////// 
+-->
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Broadcom WICED Device WPS-PBC Config</title>
+    <link rel="stylesheet" type="text/css" href="../styles/buttons.css" />
+    <script src="../scripts/general_ajax_script.js" type="text/javascript" ></script>
+    <script type="text/javascript">
+    /* <![CDATA[ */
+      function do_conn( )
+      {
+         s = 'pin=' + encodeURIComponent(document.getElementById('pin').value);
+         do_ajax( '/wps_go?' + s, null, null, 0, null, null, null, null );
+         document.getElementById('dim').style.display = "block";
+         document.getElementById('conndisp').innerHTML = "Device Started<br/>Web server and access point stopped<br/>See UART for further information"
+      }
+    /* ]]> */
+    </script>
+  </head>
+  <body style="font-family:verdana;" >
+    <table border='0' cellpadding='0' cellspacing='0' width="98%">
+      <tr style="height:20px"><td>&nbsp;</td></tr>
+      <tr style="border-collapse: collapse; padding: 0;">
+        <td style="width:20px"></td>
+        <td style="width:117px"><img src="../images/brcmlogo.png" alt="Broadcom Logo" /></td>
+        <td style="width:20px;background-image:url('../images/brcmlogo_line.png');"></td>
+        <td style="vertical-align:middle; text-align:center; font: bold 25px/100% Verdana, Arial, Helvetica, sans-serif;background-image:url('../images/brcmlogo_line.png');">
+        WICED&trade; Device Configuration
+        </td>
+        <td style="width:137px;background-image:url('../images/brcmlogo_line.png');"></td>
+      </tr>
+      <tr><td>&nbsp;</td></tr>
+    </table>
+    <noscript><h2>Javascript is required for this page to work correctly.</h2></noscript>
+    <p style="text-align:center"><img src="../images/wps_icon.png" style="vertical-align:middle" alt="WPS icon" />
+    <br/>
+    <table border="0" cellpadding="0" style="margin-left:auto;margin-right:auto;">
+      <tbody>
+        <tr><td align="center"><h2>WPS PIN</h2></td></tr>
+        <tr><td align="center">Enter the following WPS Enrollee PIN in your Wi-Fi Access Point.</td></tr>
+        <tr><td align="center">(the PIN includes a CRC, a random PIN may fail the CRC check)</td></tr>
+        <tr><td align="center"><form action="/wps_go" method="get"><p><label>PIN </label><input "color: #f00" type="text" id="pin" name="pin" maxlength="8" value="76543210" onblur="if(this.value == '') { this.value='76543210'}" onfocus="if (this.value == '76543210') {this.value=''}"><label></td></tr>        <tr><td align="center">Click <input type="button" onclick="do_conn()" value="Go!" class="button green bigrounded" /></p></form></td></tr>
+      </tbody>
+    </table>
+    <p>
+      <br/>
+      <input style="vertical-align:bottom;float:left;margin-left:20px" type="button" value="< Wi-Fi Setup" onclick="document.location.href='join.html'" />
+    </p>
+    <!-- This DIV allows the main part of the page to be disabled with a 'dimmed' effect, and displays a message center-screen -->
+    <div id="dim" style="display: none; background: #000;position: fixed; left: 0; top: 0;width: 100%; height: 100%;opacity: .80;z-index: 9999;text-align: center">
+      <h2 id="conndisp" style="color:#ff0000;position:relative;top:50%"></h2>
+    </div>
+
+  </body>
+</html>

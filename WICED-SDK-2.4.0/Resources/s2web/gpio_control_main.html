@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Configuration</title>
+    <style  type="text/css"><!-- .normal { background-color: #ffffff; } .highlight { background-color: #8f0000;  } --></style>
+    <script src="../scripts/general_ajax_script.js" type="text/javascript" ></script>
+    <script type="text/javascript">
+		function gpio_ctlr_next()
+		{
+			var select = document.getElementById("sel_menu");
+			var menu = select.options[select.selectedIndex].value;
+			
+			if( menu == "GET_GPIO")
+			{
+				location.href="../s2web/gpio_control_get.html"
+			}
+			else if( menu == "SET_GPIO")
+			{
+				location.href="../s2web/gpio_control_set.html"
+			}
+		}
+    </script>
+  </head>
+  <body style="font-family:verdana;" >
+     <table border='0' cellpadding='0' cellspacing='0' width="98%">
+      <tr style="height:20px"><td>&nbsp;</td></tr>
+      <tr style="border-collapse: collapse; padding: 0;">
+        <td style="width:20px"></td>
+        <td id="logo_path" style="width:117px"></td>
+        <td style="width:20px;"></td>
+        <td id="title" style="vertical-align:middle; text-align:center; font: bold 25px/100% Verdana, Arial, Helvetica, sans-serif;">
+        </td>
+        <td style="width:137px;"></td>
+      </tr>
+      <tr><td>&nbsp;</td></tr>
+    </table>
+    <noscript><h2>Javascript is required for this page to work correctly.</h2></noscript>
+
+	<script src="../scripts/general_ajax_script.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	CheckLogined();
+    	SetCustomLogoTitle("GPIO Control Step 1");
+    </script>
+ 
+    <table style="margin-left:auto;margin-right:auto;" >
+	    <tr>
+	    	<td style="vertical-align:middle; text-align:left; font: bold 15px/100% Verdana, Arial, Helvetica, sans-serif;">
+	    	Step 1 : Select GPIO Control Menu
+	    	</td>
+	    </tr>
+	</table>
+	<form name="s2w_gpio_form" action="">
+	<table style="margin-left:auto;margin-right:auto;" >
+	    <tr><td style=width:20px">GPIO Control Mune</td>
+	    	<td>
+	    		<select style="width:150px"  name = select_menu class='sel_menu' id='sel_menu'>
+	    			<option style="width:150px" value="GET_GPIO"> Get GPIO Status </option>
+	    			<option style="width:150px" value="SET_GPIO">Set GPIO Status</option>
+	    		</select>
+	    	</td>
+	    </tr>
+    </table>
+	<div style="margin-left:auto;margin-right:auto;" id ="setting_response">
+    <table style="margin-left:auto;margin-right:auto;"> 
+  	    <tr>
+  	    	<td><input type="button" id=setting_btn value="Next" class="gpio_ctrl_next_btn" onclick="gpio_ctlr_next();"/></td>
+		</tr>
+    </table>
+	</div>
+	<p><input style="vertical-align:bottom;float:left;margin-left:50px" type="button" value="< Main Page" onclick="document.location.href='../s2web/s2w_main.html'" /></p>
+    </form>
+  </body>
+</html>
+

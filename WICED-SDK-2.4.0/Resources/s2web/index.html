@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<title> Index </title>
+    <style type="text/css"><!-- .normal { background-color: #ffffff; } .highlight { background-color: #8f0000;  } --></style>
+	<style type="text/css">
+		#LoginLayerPop{width:500px;height:200px;position:absolute;display:none;border:1px solid #ccc;padding:10px;}
+		#LoginLayerPop .close{position:absolute;bottom:5px;right:5px;}
+	</style>
+	<script src="../scripts/general_ajax_script.js" type="text/javascript"></script>
+	<script language="JavaScript" type="text/javascript">
+	function openLayer(IdName, tpos, lpos){
+		var pop = document.getElementById(IdName);
+		pop.style.display = "block";
+		pop.style.top = tpos + "px";
+		pop.style.left = "30%";
+		//pop.style.left = lpos + "px";
+	}
+
+	function closeLayer(IdName){
+		var pop = document.getElementById(IdName);
+		pop.style.display = "none";
+	}
+	
+	function s2w_login()
+	{
+		var userid		= document.getElementById("username").value;
+    	var password    = document.getElementById("password").value;
+    	
+    	
+    	var s = "UN:" + encodeURIComponent(userid) + "/PW:" + encodeURIComponent(password) + "^";
+    	
+    	do_ajax('/s2wlogin?'+s,'s2w_login_response',null, 0, null, null, 'Failed', null);
+    	
+		session.setAtrribute("username",request.getParameter("username"));
+		session.setAtrribute("password",request.getParameter("password"));
+    }
+	function s2w_get_custom_info()
+	{
+		do_ajax('/get_custom_info','s2w_custom_info', null, 0, null, null, 'Failed', null);
+	}
+		
+	</script>
+	</head>
+	<div id="LoginLayerPop">
+		<div id="s2w_custom_info"></div>
+		<table align="center">
+			<tr>This is Login Page.<br> You need UserName and Password in order to connect to WLAN.</tr>
+			<tr><td>UserName:</td><td><input id="username" name="username" size="14"></input></td></tr>
+			<tr><td>Password:</td><td><input id="password" name="password" type="password" size="14"></input></td></tr>
+			<br></br>
+			<tr>
+				<td><input type="submit" name="submit" value="login" style="width:110px;height:30px;font-size:15px" onclick="s2w_login();"></input></td>
+				<td><input type="button" name="close_login" value="cancel" style="width:120px;height:30px;font-size:15px" onclick="closeLayer('LoginLayerPop')"></input></td>
+			</tr>
+			<div id="s2w_login_response">
+				<tr><td></td></tr>
+			</div>
+		</table>
+	</div>
+	<script language="JavaScript" type="text/javascript">
+		openLayer('LoginLayerPop',0,0);
+		s2w_get_custom_info();
+	</script>
+	</body>
+</html>

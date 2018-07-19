@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Serial Configuration</title>
+    <style  type="text/css"><!-- .normal { background-color: #ffffff; } .highlight { background-color: #8f0000;  } --></style>
+    <script src="../scripts/general_ajax_script.js" type="text/javascript" ></script>
+    <script type="text/javascript">
+		function serial_setting_save()
+		{
+			var baudrate = ""
+			var parity = ""
+			var word_len = ""
+			var stop_bit = ""
+			var flow_ctrl = ""
+			var s = ""
+			
+			
+			var select_br = document.getElementById("sel_baudrate");
+			baudrate = select_br.options[select_br.selectedIndex].value;
+			
+			var select_pr = document.getElementById("sel_parity");
+			parity = select_pr.options[select_pr.selectedIndex].value;
+
+			var select_wl = document.getElementById("sel_word_len");
+			word_len = select_wl.options[select_wl.selectedIndex].value;
+
+			var select_sb = document.getElementById("sel_stop_bit");
+			stop_bit = select_sb.options[select_sb.selectedIndex].value;
+
+			var select_fc = document.getElementById("sel_flow_ctrl");
+			flow_ctrl = select_fc.options[select_fc.selectedIndex].value;
+			
+			s = "BR:"+encodeURIComponent(baudrate)+"/PR:"+encodeURIComponent(parity)+"/WL:"+encodeURIComponent(word_len)+"/SB:"+encodeURIComponent(stop_bit)+"/FC:"+encodeURIComponent(flow_ctrl)+"^"
+			
+			do_ajax('/s2w_serial_setting?'+s, 'serial_setting_response', null, 0, null, null, 'Failed', null );
+		}
+	    function WiFi20_Reset()
+	    {
+	    	do_ajax( '/s2w_reset?', null, null, 0, null, null, 'Failed', null);
+	    }
+    </script>    
+  </head>
+
+	<script src="../scripts/general_ajax_script.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	CheckLogined();
+    	SetCustomLogoTitle("Serial Configuration");
+    </script>
+
+  <body style="font-family:verdana;" >
+     <table border='0' cellpadding='0' cellspacing='0' width="98%">
+      <tr style="height:20px"><td>&nbsp;</td></tr>
+      <tr style="border-collapse: collapse; padding: 0;">
+        <td style="width:20px"></td>
+        <td id="logo_path" style="width:117px"></td>
+        <td style="width:20px;"></td>
+        <td id="title" style="vertical-align:middle; text-align:center; font: bold 25px/100% Verdana, Arial, Helvetica, sans-serif;">
+        </td>
+        <td style="width:137px;"></td>
+      </tr>
+      <tr><td>&nbsp;</td></tr>
+    </table>
+    <noscript><h2>Javascript is required for this page to work correctly.</h2></noscript>
+
+    <table style="margin-left:auto;margin-right:auto;" >
+	    <tr>
+	    	<td style="vertical-align:middle; text-align:left; font: bold 15px/100% Verdana, Arial, Helvetica, sans-serif;">
+	    	Serial Configuration
+	    	</td>
+	    </tr>
+	</table>
+	<br></br>
+	<form name="serial_set_form" action="">
+
+	<table style="margin-left:auto;margin-right:auto;">
+		<tr><td style="width:150px">Baudrate</td>
+			<td>
+				<select style="width:150px" name = select_baudrate class='sel_baudrate' id='sel_baudrate' >
+					<option style="width:150px" value="300">         300 </option>
+					<option style="width:150px" value="600">         600 </option>
+					<option style="width:150px" value="1200">       1200 </option>
+					<option style="width:150px" value="2400">       2400 </option>
+					<option style="width:150px" value="4800">       4800 </option>
+					<option style="width:150px" value="9600">       9600 </option>
+					<option style="width:150px" value="14400">     14400 </option>
+					<option style="width:150px" value="19200">     19200 </option>
+					<option style="width:150px" value="38400">     38400 </option>
+					<option style="width:150px" value="57600">     57600 </option>
+					<option style="width:150px" value="115200" selected="selected">   115200 </option>
+					<option style="width:150px" value="230400">   230400 </option>
+					<option style="width:150px" value="460800">   460800 </option>
+					<option style="width:150px" value="921600">   921600 </option>
+					<option style="width:150px" value="1843200"> 1843200 </option>
+					
+					
+				</select>
+			</td>
+		</tr>
+		<tr><td style="wiidth:150px">Parity</td>
+			<td>
+				<select style="width:150px" name = select_parity class='sel_parity' id='sel_parity' >
+					<option style="width:150px" value="N" selected="selected"> None </option>
+					<!-- <option style="width:150px" value="O"> Odd </option> -->
+					<!-- <option style="width:150px" value="E"> Even </option> -->
+				</select>
+			</td>
+		</tr>
+		<tr><td style="wiidth:150px">Word Length</td>
+			<td>
+				<select style="width:150px" name = select_word_len class='sel_word_len' id='sel_word_len' >
+					<!-- <option style="width:150px" value="7"> 7 </option> -->
+					<option style="width:150px" value="8" selected="selected"> 8 </option>
+				</select>
+			</td>
+		</tr>
+		<tr><td style="wiidth:150px">Stop Bit</td>
+			<td>
+				<select style="width:150px" name = select_stop_bit class='sel_stop_bit' id='sel_stop_bit' >
+					<option style="width:150px" value="0.5"> 0.5 </option>
+					<option style="width:150px" value="1" selected="selected"> 1 </option>
+					<option style="width:150px" value="1.5"> 1.5 </option>
+					<option style="width:150px" value="2"> 2 </option>
+				</select>
+			</td>
+		</tr>
+		<tr><td style="wiidth:150px">Flow Control</td>
+			<td>
+				<select style="width:150px" name = select_flow_ctrl class='sel_flow_ctrl' id='sel_flow_ctrl' >
+					<option style="width:150px" value="N" selected="selected"> N </option>
+					<option style="width:150px" value="HW"> HW </option>
+				</select>
+			</td>
+		</tr>
+	</table>
+
+    <div style="margin-left:auto;mamrgin-right:auto;" id ="serial_setting_response">
+    	<table style="margin-left:auto;margin-right:auto;">
+	  	    <tr>
+	  	    	<td><input type="button" id=serial_set_btn value="Set Serial Config" class="serial_set_btn" onclick="serial_setting_save()"></td>
+			</tr>
+    	</table>
+    </div>
+    <p> <input style="vertical-align:bottom;float:left;margin-right:50px" type="button" value="< Main Page" onclick="document.location.href='../s2web/s2w_main.html'" /></p>
+	</form>
+  </body>
+</html>
